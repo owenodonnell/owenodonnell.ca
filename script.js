@@ -104,6 +104,70 @@
     img.addEventListener("load", ok);
   });
 
+  // Click-to-enlarge images: any <button class="zoom"> wrapping an <img>, stepping through all of them on the page
+  const zooms = $$("button.zoom");
+  if (zooms.length) {
+    const lb = document.createElement("div");
+    lb.className = "lightbox";
+    lb.setAttribute("role", "dialog");
+    lb.setAttribute("aria-modal", "true");
+    lb.setAttribute("aria-label", "Image viewer");
+    lb.innerHTML =
+      '<button class="lb-btn lb-close" type="button" aria-label="Close">✕</button>' +
+      '<button class="lb-btn lb-prev" type="button" aria-label="Previous image">←</button>' +
+      '<figure class="lightbox-fig"><img alt=""></figure>' +
+      '<button class="lb-btn lb-next" type="button" aria-label="Next image">→</button>' +
+      '<p class="lightbox-cap"><span class="count"></span><span class="text"></span></p>';
+    document.body.appendChild(lb);
+    const lbImg = $("img", lb), lbCount = $(".count", lb), lbText = $(".text", lb);
+    let idx = 0, opener = null;
+
+    const captionFor = (btn) => {
+      const fig = btn.closest("figure");
+      const cap = fig && $("figcaption", fig);
+      return cap ? cap.textContent.trim() : ($("img", btn).alt || "");
+    };
+    const show = (i) => {
+      idx = (i + zooms.length) % zooms.length;
+      const btn = zooms[idx], img = $("img", btn);
+      lbImg.src = btn.dataset.full || img.currentSrc || img.src;
+      lbImg.alt = img.alt;
+      lbCount.textContent = `FIG ${idx + 1} / ${zooms.length}`;
+      lbText.textContent = captionFor(btn);
+    };
+    const open = (i, btn) => {
+      opener = btn;
+      show(i);
+      lb.classList.add("open");
+      document.body.classList.add("lb-lock");
+      $(".lb-close", lb).focus();
+    };
+    const close = () => {
+      lb.classList.remove("open");
+      document.body.classList.remove("lb-lock");
+      lbImg.removeAttribute("src");
+      if (opener) opener.focus();
+    };
+
+    zooms.forEach((btn, i) => btn.addEventListener("click", () => open(i, btn)));
+    $(".lb-close", lb).addEventListener("click", close);
+    $(".lb-prev", lb).addEventListener("click", () => show(idx - 1));
+    $(".lb-next", lb).addEventListener("click", () => show(idx + 1));
+    lb.addEventListener("click", (e) => { if (e.target === lb || e.target.classList.contains("lightbox-fig")) close(); });
+    document.addEventListener("keydown", (e) => {
+      if (!lb.classList.contains("open")) return;
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowLeft") show(idx - 1);
+      else if (e.key === "ArrowRight") show(idx + 1);
+      else if (e.key === "Tab") {
+        const f = $$("button", lb);
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+  }
+
   // Background joint frames draw themselves in when they scroll into view
   const decos = $$(".deco");
   if (decos.length && "IntersectionObserver" in window && !reduceMotion) {

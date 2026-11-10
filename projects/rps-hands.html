@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Rock-Paper-Scissors Robotic Hands | Owen O’Donnell</title>
-  <meta name="description" content="Two 3D-printed robotic hands, each actuated by two motors and controlled with an MSEduino microcontroller, with game logic to win rock-paper-scissors.">
+  <meta name="description" content="Two tendon-driven 3D-printed robotic hands that play Rock-Paper-Scissors-Minus-One: DC-motor gestures, servo-driven covers, and a game-theory strategy on two ESP32 boards linked by ESP-NOW.">
   <link rel="canonical" href="https://owenodonnell.ca/projects/rps-hands.html">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231e3a5f'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial,sans-serif' font-weight='700' font-size='28' fill='%23fff'%3EO%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,38 +77,355 @@
       <a class="back-link" href="../index.html#projects"><span class="arrow" aria-hidden="true">←</span> Back to projects</a>
 
       <header class="project-head">
-        <p class="eyebrow"><span class="part-no part-no-inline">ASSY-03</span><span class="badge">Team Project</span><span class="date">Jan 2026 – Apr 2026</span></p>
+        <p class="eyebrow"><span class="part-no part-no-inline">ASSY-03</span><span class="badge">Team Project</span><span class="badge">MSE 3302B</span><span class="date">Jan 2026 – Apr 2026</span></p>
         <h1>Rock-Paper-Scissors Robotic Hands</h1>
-        <p class="lede">Two 3D-printed robotic hands, each actuated by two motors and controlled with an MSEduino, with logic that chooses which hand to keep to win.</p>
+        <p class="lede">Two tendon-driven, 3D-printed hands that play Rock-Paper-Scissors-Minus-One on their own: four DC motors form the gestures, servo-driven covers hide the dropped hand, and two ESP32 boards run a game-theory strategy and talk to each other over ESP-NOW.</p>
       </header>
 
-      <!-- Add a photo at images/rps-hands.jpg -->
-      <div class="project-media project-hero-media">
-        <img class="illus" src="../images/illustrations/rps-hands.svg" alt="Concept illustration: two robotic hands on a base with servo motors and a microcontroller board wired to them">
-        <img class="photo" src="../images/rps-hands.jpg" alt="Rock-paper-scissors robotic hands">
-        <span class="illus-label">Concept illustration</span>
-      </div>
+      <figure class="fig">
+        <div class="project-media project-hero-media has-photo">
+          <img class="photo" src="../images/rps/system-visualization.jpg" alt="Top-down 3D visualization of the final system: two pink 3D-printed hands stick straight out from a plywood backboard, each mounted above its two DC motors with grooved spools and fishing-line tendons. Servo-driven flaps hinge from the top edge of the board: the left flap stands straight up so the left hand shows scissors, and the right flap lies straight out over the right hand, covering it. An ESP32 board and motor driver sit beside each hand." width="1600" height="900">
+          <span class="viz-label">Visualization based on final design</span>
+        </div>
+        <figcaption class="hero-cap">Top-down view of a final round: the left hand keeps scissors and the right hand’s flap has swung down flat to cover it. Hands and cover arms from the real STL files; base, mounts and spools from the CAD drawings.</figcaption>
+      </figure>
 
       <div class="project-detail-grid">
-        <section class="project-detail-main">
-          <h2>What I did</h2>
-          <ul>
-            <li>3D printed and assembled two robotic hands, each actuated by two motors and controlled with an MSEduino microcontroller.</li>
-            <li>Programmed the motor control that moves each hand into rock, paper, or scissors gestures.</li>
-            <li>Programmed a start-up routine that selects the strongest pair of gestures for the two hands, avoiding weak pairs such as paper and paper.</li>
-            <li>Developed decision logic that takes the opposing team’s two hands as input and chooses which hand to keep and which to withdraw to win.</li>
-            <li>Integrated motor control and game logic into a single working system.</li>
-          </ul>
-        </section>
+        <div class="project-detail-main">
+          <section aria-labelledby="h-challenge">
+            <h2 id="h-challenge">The challenge</h2>
+            <p>Rock-Paper-Scissors-Minus-One (RPS-1) is a variation where each player shows <em>two</em> gestures, one on each hand. After both players reveal their gestures, each withdraws one hand at the same time, and the gestures left decide the round. That adds a second decision: you have to guess which hand your opponent will keep.</p>
+            <p>The brief was to build a mechatronic system that plays RPS-1 against a person. It had to:</p>
+            <ul>
+              <li>physically form rock, paper and scissors on two hands,</li>
+              <li>take in the opponent’s two gestures,</li>
+              <li>decide which of its own hands to withdraw to give itself the best chance of winning,</li>
+              <li>physically remove that hand, and</li>
+              <li>reset and do it again, reliably, round after round.</li>
+            </ul>
+            <p class="note"><strong>Starting point:</strong> the course provided the robotic hand and its CAD model (palm, finger segments and ball-joint holder). Our team designed everything around it: the tendon actuation, the spools, the motor and servo mounts, the servo-driven covers and the wooden base, plus all of the electronics and firmware.</p>
+          </section>
+
+          <section aria-labelledby="h-role">
+            <h2 id="h-role">My role</h2>
+            <p>The five-person team split into a mechanical side and a software side, with regular meetings and a shared progress tracker to keep them in step. I worked on both sides, which was useful because every mechanical change (joint friction, tendon tension, spool size) changed how long the motors had to run.</p>
+            <h3>Mechanical</h3>
+            <ul>
+              <li>Built and tested the tendon actuation: fishing-line tendons tied through drilled fingertips, elastic bands for the return stroke, and two finger groups per hand.</li>
+              <li>Worked on the custom PLA parts that turn the provided hand into a working system: the grooved spool, motor holder, servo mount, servo holder (cover arm) and the plywood base.</li>
+              <li>Ran the hands-on test-and-fix cycles: sanding stiff joints, finding a fingertip anchor that held, and fixing line tangling on the spool.</li>
+            </ul>
+            <h3>Software</h3>
+            <ul>
+              <li>Wrote and tested the Arduino firmware in the team repo, starting with motor and servo test sketches and a two-board command link, and ending with the master and slave programs.</li>
+              <li>Programmed timed motor control for each gesture and an active reset back to paper between rounds.</li>
+              <li>Implemented the game strategy: picking a pair of opening gestures that are never the same, then the three-case logic that decides which hand to cover.</li>
+              <li>Debugged the integrated system: startup glitches, servo initialization and communication between the two boards.</li>
+            </ul>
+          </section>
+        </div>
         <aside class="project-facts">
           <h2>At a glance</h2>
           <dl>
             <div><dt>Dates</dt><dd>Jan 2026 – Apr 2026</dd></div>
-            <div><dt>Type</dt><dd>Team Project</dd></div>
-            <div><dt>Tools</dt><dd>MSEduino, 3D Printing</dd></div>
+            <div><dt>Type</dt><dd>Team project (5 people), MSE 3302B</dd></div>
+            <div><dt>My focus</dt><dd>Mechanical + software</dd></div>
+            <div><dt>Controllers</dt><dd>2× ESP32-WROOM-32 (MSE Duino), master / slave over ESP-NOW</dd></div>
+            <div><dt>Actuators</dt><dd>4 DC motors (2 per hand) via MX1508 dual H-bridge drivers, 2 servos for the covers</dd></div>
+            <div><dt>Mechanical</dt><dd>PLA 3D printing, ¾″ plywood base, fishing-line tendons, elastic returns</dd></div>
+            <div><dt>Tools</dt><dd>SolidWorks, Arduino IDE (C++), Git</dd></div>
           </dl>
         </aside>
       </div>
+
+      <!-- How it works -->
+      <section class="case" aria-labelledby="h-how">
+        <h2 class="section-title" id="h-how"><span class="sec-tag" aria-hidden="true"><svg class="sec-gear"><use href="#i-gear-s"/></svg>SEC. 01<span class="sec-unit">SYSTEM</span></span>How it works</h2>
+        <div class="case-split narrow-fig">
+          <div class="case-body">
+            <p>Two ESP32 boards split the work. The <strong>master</strong> board runs the game, reads the user’s input from the Serial Monitor and drives the left hand. The <strong>slave</strong> board drives the right hand and only carries out commands the master sends it. It makes no decisions of its own. Each hand has two DC motors that reel fishing-line “tendons” onto spools to curl the fingers, and a servo-driven cover that swings shut to take that hand out of play.</p>
+            <ol class="steps">
+              <li><span><strong>Reset.</strong> The user types <code>n</code>. Both covers open and both hands drive back to paper, the default open hand.</span></li>
+              <li><span><strong>Select.</strong> The master picks one of three opening pairs, always two different gestures (paper–rock, paper–scissors or rock–scissors), and never the same pair twice in a row.</span></li>
+              <li><span><strong>Gesture.</strong> The left hand forms its gesture directly. The right-hand gesture goes to the slave as a wireless packet.</span></li>
+              <li><span><strong>Input.</strong> The user enters the opponent’s pair as two letters, e.g. <code>PR</code>. Anything that isn’t exactly two of R / P / S is rejected.</span></li>
+              <li><span><strong>Decide.</strong> The strategy picks which gesture to keep.</span></li>
+              <li><span><strong>Cover.</strong> The servo on the other hand closes its cover. The visible hand is the final throw, and the system goes back to idle.</span></li>
+            </ol>
+          </div>
+          <figure class="fig fig-pad">
+            <button class="zoom" type="button" aria-label="Enlarge: system architecture diagram"><img src="../images/rps/system-architecture.png" alt="Block diagram: opponent input via Serial Monitor goes to the master controller running the strategy; the master drives the left-hand motors and servo directly and the right hand through the slave board; both hands display gestures, then the removal mechanism leaves the final gesture" width="374" height="636" loading="lazy"></button>
+            <figcaption><span class="k">FIG 1</span>System architecture: the master runs the strategy and drives the left hand; the slave drives the right.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- Mechanical -->
+      <section class="case" aria-labelledby="h-mech">
+        <h2 class="section-title" id="h-mech"><span class="sec-tag" aria-hidden="true"><svg class="sec-gear"><use href="#i-gear-s"/></svg>SEC. 02<span class="sec-unit">MECH</span></span>Mechanical design</h2>
+        <div class="case-body">
+          <p class="note"><strong>Provided vs. designed:</strong> the hand itself (a palm on a ball-joint holder, with three-segment fingers, a two-segment thumb and click-together ball joints) came from the course. The actuation, spools, mounts, covers and base described below are our team’s design.</p>
+          <p>We based the actuation on the human hand: motors act as the muscles and fishing line as the tendons. Watching our own hands throw each gesture showed that the <strong>index and middle fingers always move together</strong>, and so do the <strong>thumb, ring and pinky</strong>. So instead of one actuator per finger, each hand uses two motors:</p>
+          <div class="table-wrap">
+            <table class="data-table">
+              <caption>Finger groups and gestures</caption>
+              <thead><tr><th scope="col">Gesture</th><th scope="col">Motor A: thumb, ring, pinky</th><th scope="col">Motor B: index, middle</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Paper (default)</th><td>Off, fingers open</td><td>Off, fingers open</td></tr>
+                <tr><th scope="row">Rock</th><td>Pull</td><td>Pull</td></tr>
+                <tr><th scope="row">Scissors</th><td>Pull</td><td>Off</td></tr>
+                <tr><th scope="row">Reset to paper</th><td>Reverse, then stop</td><td>Reverse, then stop</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <ul>
+            <li><strong>Tendons and returns.</strong> Fishing line is tied through holes drilled in each fingertip and wound onto a spool on the motor. Elastic bands run from the fingertips to the back of the palm, so the fingers spring back open when the line goes slack. Early tests showed that line has to do the pulling and elastics only the returning.</li>
+            <li><strong>Grooved spool.</strong> One motor has to reel in several lines without tangling them. Two spools wouldn’t fit on the motor shaft, so we made one Ø30 mm spool with a raised centre divider that keeps each line in its own channel.</li>
+            <li><strong>Covers for the “minus one”.</strong> Physically pulling a whole hand away would have needed far more mechanism and space. Instead, each hand has a flap on a servo-driven arm, hinged at the top of the board, that only has to swing about 90°, well inside a servo’s 180° range.</li>
+            <li><strong>Mounts and base.</strong> A ¾″ plywood base holds a 300 mm backboard. Each hand’s holder cup screws to the backboard so the hand sticks straight out, with its two motor holders mounted below it. The cover servos sit on the top edge of the board, and each flap swings down from upright to lie flat over its hand.</li>
+            <li><strong>Manufacturing.</strong> All custom parts are PLA, which is cheap, quick to reprint and strong enough for these low loads. Stiff joints and mating faces were sanded after printing to cut friction.</li>
+          </ul>
+          <p>The SolidWorks drawings for the spool, motor holder, servo mount, servo holder and base are in the <a href="#h-gallery">gallery</a>.</p>
+        </div>
+      </section>
+
+      <!-- Electronics -->
+      <section class="case" aria-labelledby="h-elec">
+        <h2 class="section-title" id="h-elec"><span class="sec-tag" aria-hidden="true"><svg class="sec-gear"><use href="#i-gear-s"/></svg>SEC. 03<span class="sec-unit">ELEC</span></span>Electronics</h2>
+        <div class="case-body">
+          <p>Each hand has its own ESP32-WROOM-32 (on an MSE Duino board), its own MX1508 motor driver and its own cover servo. Both boards use the <strong>same pin layout</strong>, which made wiring, debugging and copying the hardware much simpler. The work is split across two boards partly because one board couldn’t power four DC motors and two servos at once.</p>
+          <ul>
+            <li><strong>DC motors</strong> run through the MX1508’s dual H-bridge. Each motor uses two GPIO inputs: driving one high spins it one way and driving the other high reverses it, which we need to both curl and reset the fingers. A motor that spun the wrong way could be fixed by swapping its leads at the driver output.</li>
+            <li><strong>Servos</strong> connect straight to a GPIO pin and are positioned with a PWM signal. They need 5 V while the ESP32 runs at 3.3 V, so they are fed from the board’s 5 V rail (USB or an external pack) rather than the logic supply.</li>
+          </ul>
+        </div>
+        <div class="case-split">
+          <figure class="fig fig-pad">
+            <button class="zoom" type="button" aria-label="Enlarge: wiring schematic"><img src="../images/rps/wiring-schematic.png" alt="Hand-drawn wiring schematic: ESP32-WROOM-32 connected to an MX1508 motor driver, a servo, and left and right motor/encoder units, with 3.3 V and 5 V rails and common ground" width="1013" height="633" loading="lazy"></button>
+            <figcaption><span class="k">FIG 2</span>Wiring for one hand: ESP32 → MX1508 → two motors, plus the cover servo on the 5 V rail.</figcaption>
+          </figure>
+          <div class="table-wrap">
+            <table class="data-table">
+              <caption>Pin assignments (same on both boards)</caption>
+              <thead><tr><th scope="col">Function</th><th scope="col" class="num">GPIO</th></tr></thead>
+              <tbody>
+                <tr><td>Motor A, input 1 / 2</td><td class="num">26 / 16</td></tr>
+                <tr><td>Motor B, input 1 / 2</td><td class="num">27 / 17</td></tr>
+                <tr><td>Cover servo signal</td><td class="num">4</td></tr>
+                <tr><td>Slave address</td><td class="num">MAC in master code</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="case-body">
+          <div class="table-wrap">
+            <table class="data-table">
+              <caption>Bill of materials</caption>
+              <thead><tr><th scope="col">Item</th><th scope="col" class="num">Qty</th><th scope="col">Purpose</th></tr></thead>
+              <tbody>
+                <tr><td>3D-printed hands (PLA)</td><td class="num">2</td><td>Articulated hand mechanism</td></tr>
+                <tr><td>MSE Duino (ESP32) boards</td><td class="num">2</td><td>Master and slave controllers</td></tr>
+                <tr><td>DC motors</td><td class="num">4</td><td>Pull the finger tendons</td></tr>
+                <tr><td>Servos</td><td class="num">2</td><td>Swing the hand covers</td></tr>
+                <tr><td>Motor mounts, spools (PLA)</td><td class="num">2 + 2</td><td>Hold motors and wind the line</td></tr>
+                <tr><td>Fishing line / elastic bands</td><td class="num">10 / 10</td><td>Tendons and return springs</td></tr>
+                <tr><td>Plywood backboard</td><td class="num">1</td><td>Rigid base for the whole system</td></tr>
+                <tr><td>Screws, hot glue, wire</td><td class="num">As req.</td><td>Fastening, line-to-spool, connections</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Software -->
+      <section class="case" aria-labelledby="h-sw">
+        <h2 class="section-title" id="h-sw"><span class="sec-tag" aria-hidden="true"><svg class="sec-gear"><use href="#i-gear-s"/></svg>SEC. 04<span class="sec-unit">FW</span></span>Software &amp; game strategy</h2>
+        <div class="case-split narrow-fig">
+          <div class="case-body">
+            <p>The firmware is a simple state machine, <em>idle → resetting → selecting → gesturing → waiting for input → computing → covering → idle</em>, so actions can’t run out of order. That was a real problem in early testing.</p>
+            <p>The two boards communicate over <strong>ESP-NOW</strong>, a peer-to-peer protocol that needs no router. The master knows the slave’s MAC address and sends it small packets, each with a <strong>sequence number</strong>, a command (<code>SET_GESTURE</code>, <code>SET_COVER</code> or <code>RESET_HAND</code>), a gesture and a cover state. The slave only acts on packets newer than the last one it handled, so stale or repeated commands are dropped.</p>
+            <p>Gestures are open-loop: each motor runs for a tuned length of time. There’s no position feedback, so getting those timings right took a lot of testing (see below).</p>
+            <h3>Why the opening pair is never doubled</h3>
+            <p>If we showed the same gesture on both hands, we would have no choice left to make in the minus-one step. Working through every case against an opponent who plays randomly but always withdraws their weaker hand, a doubled pair <strong>wins 16.7%, draws 33.3% and loses 50%</strong> of the time. Against an opponent who also never doubles, it <strong>never wins</strong> (0% / 33.3% / 66.7%). So the firmware only ever opens with two different gestures.</p>
+          </div>
+          <figure class="fig fig-pad">
+            <button class="zoom" type="button" aria-label="Enlarge: software state flowchart"><img src="../images/rps/software-state-flow.png" alt="Flowchart of the software states: Idle, Resetting, Selecting, Gesturing, Waiting for User Input, Computing Game Strategy, Covering, then back to Idle" width="318" height="656" loading="lazy"></button>
+            <figcaption><span class="k">FIG 3</span>Firmware state flow for one round.</figcaption>
+          </figure>
+        </div>
+        <div class="case-body">
+          <h3>Choosing which hand to keep</h3>
+          <div class="table-wrap">
+            <table class="data-table">
+              <caption>Decision logic: <code>chooseFinalHand()</code></caption>
+              <thead><tr><th scope="col">Opponent shows</th><th scope="col">What the code does</th><th scope="col">Typical outcome</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Two of the same gesture</th><td>Score each of our gestures against theirs with <code>rpsResult()</code> and keep the higher one.</td><td>Always a win or a draw, because our two gestures differ.</td></tr>
+                <tr><th scope="row">The same pair we did</th><td>Keep the gesture that beats the other one in our pair (<code>dominantHandOfPair()</code>).</td><td>Usually a draw. Wins if the opponent keeps the wrong one.</td></tr>
+                <tr><th scope="row">A different pair</th><td>Find the gesture both players share (<code>getSharedHand()</code>). Keep it 2⁄3 of the time and the other gesture 1⁄3, a mixed strategy from the Nash-equilibrium payoffs.</td><td>Unpredictable to the opponent, and optimal in expectation.</td></tr>
+              </tbody>
+            </table>
+          </div>
+<pre class="code-block"><code><span class="c">// Case 3: opponent showed a different, non-identical pair</span>
+char shared = getSharedHand(myA, myB, oppA, oppB);
+char other  = getOtherHand(myA, myB, shared);
+
+int roll = random(0, 3);          <span class="c">// 0, 1, 2</span>
+return (roll &lt; 2) ? shared : other;  <span class="c">// keep shared 2/3, other 1/3</span></code></pre>
+          <figure class="fig fig-pad">
+            <button class="zoom" type="button" aria-label="Enlarge: probability calculations"><img src="../images/rps/strategy-probability-calcs.png" alt="Handwritten payoff tables and probability calculations for playing identical gestures on both hands, showing 50% loss, 16.7% win and 33.3% draw, and 66.7% loss, 0% win and 33.3% draw if the opponent never doubles" width="936" height="530" loading="lazy"></button>
+            <figcaption><span class="k">FIG 4</span>Working out the odds of opening with a doubled pair, which is why the firmware never does it.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- Testing -->
+      <section class="case" aria-labelledby="h-test">
+        <h2 class="section-title" id="h-test"><span class="sec-tag" aria-hidden="true"><svg class="sec-gear"><use href="#i-gear-s"/></svg>SEC. 05<span class="sec-unit">TEST</span></span>Testing &amp; iteration</h2>
+        <div class="case-body">
+          <p>We built and tested one hand first, so problems got fixed before we printed the second. Below are the mechanical tests, the elastic strength data and the firmware and integration problems we found and fixed.</p>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <caption>Mechanical tests</caption>
+            <thead><tr><th scope="col">Test</th><th scope="col">Attempt</th><th scope="col">Result</th><th scope="col">What we learned / changed</th></tr></thead>
+            <tbody>
+              <tr><th scope="row" rowspan="2">Joint mobility</th><td>Assemble straight off the printer</td><td><span class="pf pf-fail">FAIL</span></td><td>Joints were too stiff, so the fingers couldn’t be extended.</td></tr>
+              <tr><td>Sand inside each joint</td><td><span class="pf pf-pass">PASS</span></td><td>Smooth motion, and the motors and elastics move the fingers without straining.</td></tr>
+              <tr><th scope="row" rowspan="2">Tendon material</th><td>Elastic bands as the tendons</td><td><span class="pf pf-fail">FAIL</span></td><td>The elastic pulled back against the fingers as they extended.</td></tr>
+              <tr><td>Fishing line pulls, elastics only return</td><td><span class="pf pf-pass">PASS</span></td><td>Line transmits force and elastics reopen the hand.</td></tr>
+              <tr><th scope="row" rowspan="3">Line-to-finger fixture</th><td>Heat a wire and push it into the PLA to form a loop</td><td><span class="pf pf-fail">FAIL</span></td><td>Couldn’t get deep enough into the PLA to hold.</td></tr>
+              <tr><td>Heat the hand, then push the wire in</td><td><span class="pf pf-fail">FAIL</span></td><td>PLA softens at around 60 °C and lost its strength at this high-stress point.</td></tr>
+              <tr><td>Drill through the fingertip and tie the line</td><td><span class="pf pf-pass">PASS</span></td><td>Held under spooling tension, and the part stayed intact.</td></tr>
+              <tr><th scope="row" rowspan="2">Line spooling</th><td>Two spools on one motor</td><td><span class="pf pf-fail">FAIL</span></td><td>The motor shaft was too short for two spools.</td></tr>
+              <tr><td>One spool with a centre divider</td><td><span class="pf pf-pass">PASS</span></td><td>One spool now works as two separate channels.</td></tr>
+              <tr><th scope="row" rowspan="2">Spool groove depth</th><td>0.3 cm groove</td><td><span class="pf pf-fail">FAIL</span></td><td>At full retraction, line jumped the divider and tangled.</td></tr>
+              <tr><td>1.0 cm groove</td><td><span class="pf pf-pass">PASS</span></td><td>Full tendon length winds in with no crossover.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="case-body">
+          <h3>Elastic band tensile test</h3>
+          <p>To check whether rubber bands could provide the return force, we pulled bands to failure with a digital luggage scale, with the other end anchored under a couch so a snapping band would fly away from whoever was pulling. The results were inconsistent: bands that had already been stretched past their elastic limit broke far earlier. Doubling the bands raised the breaking load, but by less than double, and both bands failed in quick succession.</p>
+        </div>
+        <div class="tables-2">
+          <div class="table-wrap">
+            <table class="data-table">
+              <caption>Single band, force at break</caption>
+              <thead><tr><th scope="col">Trial</th><th scope="col" class="num">lbs</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td class="num">4.4</td></tr>
+                <tr><td>2</td><td class="num">7.9</td></tr>
+                <tr><td>3</td><td class="num">9.5</td></tr>
+                <tr><td>4</td><td class="num">4.1</td></tr>
+                <tr><td>5</td><td class="num">15.3</td></tr>
+                <tr><td>6</td><td class="num">17.0</td></tr>
+                <tr><td>7</td><td class="num">8.6</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <caption>Two bands together, force at break</caption>
+              <thead><tr><th scope="col">Trial</th><th scope="col">Band</th><th scope="col" class="num">lbs</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>1st to break</td><td class="num">22.3</td></tr>
+                <tr><td>1</td><td>2nd to break</td><td class="num">22.1</td></tr>
+                <tr><td>2</td><td>1st to break</td><td class="num">25.4</td></tr>
+                <tr><td>2</td><td>2nd to break</td><td class="num">24.6</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="case-body"><h3>Firmware &amp; integration</h3></div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <caption>Problems found in system testing</caption>
+            <thead><tr><th scope="col">Area</th><th scope="col">Issue observed</th><th scope="col">Root cause</th><th scope="col">Fix</th><th scope="col">Result</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Startup</th><td>Motors spun randomly at power-on</td><td>GPIO pins left uninitialized, and logic ran too early</td><td>Set every driver pin as an output and drive it low before anything else runs</td><td>Stable startup</td></tr>
+              <tr><th scope="row">Servos</th><td>Covers misaligned, or only one side initialized</td><td>Servo position not set before the boards synced</td><td>Force both covers open and reset both hands at boot</td><td>Both hands start visible</td></tr>
+              <tr><th scope="row">Board link</th><td>Early sketches sent single-character commands over a wired UART link between the two halves</td><td>Extra wiring between the hands, and plain characters were hard to verify</td><td>Moved to ESP-NOW with structured command packets</td><td>Self-contained, easier to debug</td></tr>
+              <tr><th scope="row">Pairing</th><td>Slave not responding</td><td>Wrong MAC address / ESP-NOW peer setup</td><td>A utility sketch prints the slave’s MAC, which is copied into the master code</td><td>Reliable response</td></tr>
+              <tr><th scope="row">Sync</th><td>Slave ran old or repeated commands</td><td>No check on incoming packets</td><td>Sequence numbers. The slave keeps only the newest packet.</td><td>No duplicate or late actions, even in rapid rounds</td></tr>
+              <tr><th scope="row">Reset</th><td>Fingers didn’t return to the same start position</td><td>Elastic return alone was unreliable</td><td>Active reset: drive both motors in reverse for a set time</td><td>Each round starts from a known state</td></tr>
+              <tr><th scope="row">Motor control</th><td>Uneven motors, inconsistent gestures</td><td>Friction and tendon tension vary, and control is open-loop</td><td>Tuned the motor run times through repeated trials</td><td>Better repeatability</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Results -->
+      <section class="case" aria-labelledby="h-results">
+        <h2 class="section-title" id="h-results"><span class="sec-tag" aria-hidden="true"><svg class="sec-gear"><use href="#i-gear-s"/></svg>SEC. 06<span class="sec-unit">RESULT</span></span>Results &amp; takeaways</h2>
+        <div class="case-body">
+          <p>The final system played full rounds of RPS-1 consistently and repeatably. It formed all three gestures with just two motors per hand, chose which hand to keep for every possible opponent pair, and covered the correct hand at the end of every round. The master and slave stayed in sync over repeated test cycles with no significant packet loss.</p>
+        </div>
+        <div class="takeaways">
+          <div class="takeaway"><h3>Hardware and software can’t be separated</h3><p>Joint friction, tendon tension and spool size all changed how long the motors needed to run. The two sides had to be developed together.</p></div>
+          <div class="takeaway"><h3>Open-loop control has limits</h3><p>Timed actuation worked, but only after a lot of tuning, and it drifts as the elastics wear. This is why real systems measure their own state.</p></div>
+          <div class="takeaway"><h3>Start from a known state</h3><p>Initializing pins, forcing covers open and resetting the hands actively turned random startup behaviour into something reliable.</p></div>
+          <div class="takeaway"><h3>Distributed systems need validation</h3><p>Correct pairing and sequence-numbered packets fixed missed, late and duplicated commands between the boards.</p></div>
+        </div>
+        <div class="case-body">
+          <h3>Limitations and what I’d do next</h3>
+          <ul>
+            <li><strong>Close the loop.</strong> Add motor encoders for position feedback instead of timing. The schematic already shows motor/encoder units and the firmware reserves encoder pins.</li>
+            <li><strong>See the opponent.</strong> Replace typed Serial Monitor input with computer-vision gesture detection, so the robot doesn’t need a laptop or someone typing.</li>
+            <li><strong>Clean up the wiring.</strong> Two boards, four motors, drivers and servos got cluttered. A custom PCB or proper cable management would make it more reliable and easier to debug.</li>
+            <li><strong>Longer-life tendons.</strong> Line and elastic tension change over time, and the grooved spool reduces tangling but doesn’t eliminate it over long use.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Gallery -->
+      <section class="case" aria-labelledby="h-gallery">
+        <h2 class="section-title" id="h-gallery"><span class="sec-tag" aria-hidden="true"><svg class="sec-gear"><use href="#i-gear-s"/></svg>SEC. 07<span class="sec-unit">IMG</span></span>Gallery</h2>
+        <div class="gallery">
+          <figure class="gallery-item">
+            <button class="zoom" type="button" aria-label="Enlarge: hand CAD render"><img src="../images/rps/hand-cad-render.jpg" alt="Render of the course-provided hand print files" width="1600" height="900" loading="lazy"></button>
+            <figcaption>Course-provided hand model: palm, ball-joint holder and finger segments.</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <button class="zoom" type="button" aria-label="Enlarge: single versus grooved spool"><img src="../images/rps/spool-single-vs-grooved.jpg" alt="Two pink PLA spools: a plain single spool on the left and the grooved two-channel spool on the right" width="422" height="280" loading="lazy"></button>
+            <figcaption>Spooling test: plain spool (left) next to the two-channel grooved spool (right).</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <button class="zoom" type="button" aria-label="Enlarge: spool groove depth"><img src="../images/rps/spool-groove-depth.jpg" alt="Two grooved PLA spools with line wound on them: the original shallow groove on the left, the deeper groove on the right" width="426" height="286" loading="lazy"></button>
+            <figcaption>Groove-depth test: original 0.3 cm divider (left) next to the 1 cm version (right).</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <button class="zoom" type="button" aria-label="Enlarge: fingertip line knot"><img src="../images/rps/fingertip-line-knot.jpg" alt="Close-up of a printed fingertip with fishing line knotted through a drilled hole" width="376" height="370" loading="lazy"></button>
+            <figcaption>Final tendon anchor: line knotted through a hole drilled in the fingertip.</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <button class="zoom" type="button" aria-label="Enlarge: palm after heating test"><img src="../images/rps/palm-heat-damage.jpg" alt="Pink printed palm showing melted, deformed spots where heat was applied" width="352" height="358" loading="lazy"></button>
+            <figcaption>Failed fixture test: heating softened the PLA palm and deformed it.</figcaption>
+          </figure>
+          <figure class="gallery-item contain">
+            <button class="zoom" type="button" aria-label="Enlarge: spool drawing"><img src="../images/rps/drawing-spool.png" alt="SolidWorks drawing of the grooved spool, 30 mm diameter" width="479" height="370" loading="lazy"></button>
+            <figcaption>Drawing: grooved spool, Ø30 mm with a raised centre divider.</figcaption>
+          </figure>
+          <figure class="gallery-item contain">
+            <button class="zoom" type="button" aria-label="Enlarge: motor holder drawing"><img src="../images/rps/drawing-motor-holder.png" alt="SolidWorks drawing of the motor holder bracket" width="471" height="364" loading="lazy"></button>
+            <figcaption>Drawing: motor holder that screws onto the backboard.</figcaption>
+          </figure>
+          <figure class="gallery-item contain">
+            <button class="zoom" type="button" aria-label="Enlarge: servo mount drawing"><img src="../images/rps/drawing-servo-mount.png" alt="SolidWorks drawing of the servo mount block" width="462" height="356" loading="lazy"></button>
+            <figcaption>Drawing: servo mount.</figcaption>
+          </figure>
+          <figure class="gallery-item contain">
+            <button class="zoom" type="button" aria-label="Enlarge: servo holder drawing"><img src="../images/rps/drawing-servo-holder.png" alt="SolidWorks drawing of the long L-shaped servo holder arm, 145 mm tall" width="477" height="372" loading="lazy"></button>
+            <figcaption>Drawing: servo holder, the 145 mm arm attached to the servo.</figcaption>
+          </figure>
+          <figure class="gallery-item contain">
+            <button class="zoom" type="button" aria-label="Enlarge: wooden base drawing"><img src="../images/rps/drawing-wooden-base.png" alt="SolidWorks drawing of the wooden base, 350 by 350 mm plate with a 300 mm backboard" width="472" height="365" loading="lazy"></button>
+            <figcaption>Drawing: plywood base, 350 × 350 mm with a 300 mm backboard.</figcaption>
+          </figure>
+        </div>
+      </section>
 
       <div class="linkage linkage-inline" aria-hidden="true"><span class="link-bar"></span><svg class="joint" style="--x:0%" viewBox="-14 -14 28 28"><circle class="j-ring" r="11"/><g class="j-rot"><circle r="4.6"/><path d="M0 -11V-7M0 7V11M-11 0H-7M7 0H11"/></g><circle class="j-pin" r="1.6"/></svg><svg class="joint rev" style="--x:34%" viewBox="-14 -14 28 28"><circle class="j-ring" r="11"/><g class="j-rot"><circle r="4.6"/><path d="M0 -11V-7M0 7V11M-11 0H-7M7 0H11"/></g><circle class="j-pin" r="1.6"/></svg><svg class="joint" style="--x:66%" viewBox="-14 -14 28 28"><circle class="j-ring" r="11"/><g class="j-rot"><circle r="4.6"/><path d="M0 -11V-7M0 7V11M-11 0H-7M7 0H11"/></g><circle class="j-pin" r="1.6"/></svg><svg class="joint rev" style="--x:100%" viewBox="-14 -14 28 28"><circle class="j-ring" r="11"/><g class="j-rot"><circle r="4.6"/><path d="M0 -11V-7M0 7V11M-11 0H-7M7 0H11"/></g><circle class="j-pin" r="1.6"/></svg></div>
       <nav class="project-pager" aria-label="More projects">
