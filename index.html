@@ -2,80 +2,104 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Owen O’Donnell | Mechatronics &amp; AI Systems Engineer</title>
-  <meta name="description" content="Owen O’Donnell — Mechatronic Systems & Artificial Intelligence Systems Engineering student at Western University.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Owen O’Donnell | Mechatronics &amp; AI Systems Engineering</title>
+  <meta name="description" content="Owen O’Donnell — Mechatronic Systems & Artificial Intelligence Systems Engineering student at Western University. Open to full-time roles starting May 2027.">
   <link rel="canonical" href="https://owenodonnell.ca/">
-  <meta property="og:title" content="Owen O’Donnell | Mechatronics & AI Systems Engineer">
+  <meta property="og:title" content="Owen O’Donnell | Mechatronics & AI Systems Engineering">
   <meta property="og:description" content="Mechatronic Systems & Artificial Intelligence Systems Engineering student at Western University.">
   <meta property="og:url" content="https://owenodonnell.ca/">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231e3a5f'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial,sans-serif' font-weight='700' font-size='28' fill='%23fff'%3EO%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add("js");</script>
 </head>
-<body>
-  <a class="skip-link" href="#main">Skip to content</a>
+<body class="has-intro">
+  <a class="skip-link" href="#about">Skip to content</a>
 
-  <header class="site-header" id="top">
+  <header class="site-header">
     <nav class="nav container" aria-label="Primary">
-      <a href="#hero" class="nav-logo">Owen O’Donnell</a>
+      <a href="#intro" class="nav-logo">Owen O’Donnell</a>
       <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
       <ul class="nav-links" id="nav-links">
         <li><a href="#about">About</a></li>
-        <li><a href="#experience">Experience</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
         <li><a href="#leadership">Leadership</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li><a href="resume.pdf" class="nav-cta" target="_blank" rel="noopener">Resume</a></li>
       </ul>
     </nav>
   </header>
 
   <main id="main">
-    <!-- HERO -->
-    <section class="hero" id="hero">
-      <div class="container hero-inner">
-        <p class="hero-eyebrow">Western University · B.E.Sc. Expected 2027</p>
-        <h1 class="hero-name">Owen O’Donnell</h1>
-        <p class="hero-title">Mechatronics &amp; AI Systems Engineer</p>
-        <p class="hero-intro">
-          Dual-program Mechatronic Systems and Artificial Intelligence Systems Engineering student
-          working across mechanical design, embedded control, and software, from a subsurface
-          battery storage capstone to an autonomous solar-powered blimp.
-        </p>
-        <div class="hero-actions">
-          <a href="resume.pdf" class="btn btn-primary" target="_blank" rel="noopener">View Resume</a>
-          <a href="#contact" class="btn btn-outline">Contact Me</a>
+    <!-- ===== INTRO ===== -->
+    <section class="intro" id="intro" aria-label="Introduction">
+      <h1 class="sr-only">Owen O’Donnell, Mechatronics &amp; AI Systems Engineering, Western University</h1>
+
+      <div class="intro-hud" aria-hidden="true">
+        <div class="hud-title">ARM-01 · PICK &amp; PLACE</div>
+        <div><span class="hud-k">RAIL</span><span id="hud-rail">—</span></div>
+        <div><span class="hud-k">J1</span><span id="hud-j1">—</span></div>
+        <div><span class="hud-k">J2</span><span id="hud-j2">—</span></div>
+        <div><span class="hud-k">TCP</span><span id="hud-tcp">—</span></div>
+        <div><span class="hud-k">GRIP</span><span id="hud-grip">—</span></div>
+        <div><span class="hud-k">TASK</span><span id="hud-task">—</span></div>
+      </div>
+
+      <button class="intro-ctrl intro-skip" id="intro-skip" type="button">Skip <span aria-hidden="true">→|</span></button>
+      <button class="intro-ctrl intro-replay" id="intro-replay" type="button" hidden><span aria-hidden="true">↻</span> Replay</button>
+
+      <div class="intro-stage">
+        <svg id="intro-svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet"></svg>
+        <div class="intro-fallback">
+          <p class="intro-fallback-name">Owen O’Donnell</p>
+          <p class="intro-fallback-tag">Mechatronics &amp; AI Systems Engineering · Western University</p>
         </div>
+      </div>
+
+      <div class="intro-footer">
+        <a href="#about" class="intro-enter">Enter</a>
+        <span class="intro-scroll" aria-hidden="true">or scroll <span class="chev"></span></span>
       </div>
     </section>
 
-    <!-- ABOUT -->
+    <!-- ===== ABOUT ===== -->
     <section class="section" id="about">
       <div class="container">
         <h2 class="section-title">About</h2>
         <div class="about-grid">
           <div class="about-text">
+            <p class="availability">
+              <span class="pulse" aria-hidden="true"></span>
+              Open to full-time roles starting May 2027 or later
+            </p>
             <p>
               I’m an engineering student at Western University in the dual Mechatronic Systems Engineering
               and Artificial Intelligence Systems Engineering program, expected to graduate in 2027.
             </p>
             <p>
               My work spans mechanical-electrical systems integration, CAD in SolidWorks and Onshape,
-              prototyping and iterative testing, and full-stack software development in .NET/C# and Angular.
-              I currently lead mechanical design for LiftLabs’ autonomous solar-powered blimp and am working on
-              GeoCell, a subsurface battery energy storage capstone.
+              prototyping and iterative testing, and software development in .NET/C# and Angular.
+              I lead mechanical design for LiftLabs’ autonomous solar-powered blimp, I’m working on
+              GeoCell, a subsurface battery energy storage capstone, and I spent summer 2026 as a
+              Software Engineer Intern at Wandrian (ItaliaRail).
             </p>
+            <div class="about-actions">
+              <a href="resume.pdf" class="btn btn-primary" target="_blank" rel="noopener">View Resume</a>
+              <a href="#contact" class="btn btn-outline">Contact Me</a>
+            </div>
           </div>
           <div class="about-facts">
             <div class="fact-card">
               <h3>Education</h3>
-              <p><strong>Western University</strong></p>
+              <p><strong>Western University</strong> · Expected 2027</p>
               <p>B.E.Sc., Mechatronic Systems Engineering &amp; Artificial Intelligence Systems Engineering (Dual Program)</p>
               <ul>
                 <li>Associate Mechanical Design Certificate</li>
@@ -95,72 +119,26 @@
       </div>
     </section>
 
-    <!-- EXPERIENCE -->
-    <section class="section section-alt" id="experience">
+    <!-- ===== PROJECTS ===== -->
+    <section class="section section-alt" id="projects">
       <div class="container">
-        <h2 class="section-title">Experience</h2>
-        <div class="timeline">
-          <article class="timeline-item">
-            <div class="timeline-head">
-              <div>
-                <h3>Software Engineer Intern</h3>
-                <p class="org">Wandrian (ItaliaRail)</p>
-              </div>
-              <span class="date">May 2026 – Aug 2026</span>
-            </div>
-            <ul>
-              <li>Developed features and fixes for ItaliaRail, a rail booking platform offering 80,000+ routes, across a .NET/C# backend and Angular frontend.</li>
-              <li>Built a trip summary card featuring a mobile swipe-up interaction and conditional logic based on train type.</li>
-              <li>Made the class comparison popup configuration-driven so content updates no longer require a deployment; designed it with a C4 diagram and gained developer sign-off before implementation.</li>
-              <li>Fixed fare validation bugs in the journey engine that allowed duplicate trips to be added to the cart.</li>
-              <li>Resolved failing unit tests and Azure DevOps CI pipeline failures; worked through code reviews and sprint meetings in an Agile team.</li>
-            </ul>
-          </article>
-
-          <article class="timeline-item">
-            <div class="timeline-head">
-              <div>
-                <h3>Water, Fuel, and Environmental (W.F.E.) Technician</h3>
-                <p class="org">Canadian Forces Base Trenton · Trenton, ON</p>
-              </div>
-              <span class="date">Jun 2024 – Aug 2024</span>
-            </div>
-            <ul>
-              <li>Operated and maintained industrial water purification and fuel distribution systems.</li>
-              <li>Conducted preventive maintenance, diagnostics, and troubleshooting to ensure system readiness.</li>
-              <li>Documented maintenance procedures and system performance to military technical standards.</li>
-              <li>Ensured strict compliance with safety protocols when handling hazardous materials.</li>
-              <li>Collaborated with multidisciplinary teams in a regulated, high-responsibility environment.</li>
-            </ul>
-          </article>
-
-          <article class="timeline-item">
-            <div class="timeline-head">
-              <div>
-                <h3>Framing Specialist</h3>
-                <p class="org">Fast Track Construction · Trenton, ON</p>
-              </div>
-              <span class="date">Summers 2023 &amp; 2025</span>
-            </div>
-            <ul>
-              <li>Interpreted engineering drawings and blueprints to execute precise framing work.</li>
-              <li>Used hand and power tools to fabricate and assemble structural components.</li>
-              <li>Worked efficiently in a fast-paced team environment to meet project deadlines.</li>
-              <li>Developed strong attention to detail, time management, and on-site problem-solving skills.</li>
-            </ul>
-          </article>
+        <div class="section-head">
+          <h2 class="section-title">Projects</h2>
+          <div class="scroll-btns">
+            <button class="scroll-btn" data-dir="-1" type="button" aria-label="Scroll projects left">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <button class="scroll-btn" data-dir="1" type="button" aria-label="Scroll projects right">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
         </div>
       </div>
-    </section>
 
-    <!-- PROJECTS -->
-    <section class="section" id="projects">
-      <div class="container">
-        <h2 class="section-title">Projects</h2>
-        <div class="project-grid">
+      <div class="project-track-wrap">
+        <div class="project-track" id="project-track" tabindex="0" aria-label="Projects, scroll sideways">
 
           <article class="project-card">
-            <!-- Add a photo at images/geocell.jpg -->
             <div class="project-media">
               <img src="images/geocell.jpg" alt="GeoCell subsurface battery energy storage project" loading="lazy">
               <span class="placeholder-label">Photo coming soon</span>
@@ -171,19 +149,12 @@
                 <span class="badge">Capstone</span>
               </div>
               <h3>GeoCell – Subsurface Battery Energy Storage</h3>
-              <p class="project-sub">Mechatronic &amp; AI Systems Design · Team of 4 · Western University</p>
-              <ul>
-                <li>Developing a renewable energy storage system that houses batteries in drilled U-shaped boreholes beneath wind and solar farms.</li>
-                <li>Designing the battery storage system, including battery selection, cartridge design, well interface, structure, and thermal analysis.</li>
-                <li>Designing a mechatronic servicing system to extract and replace faulty batteries.</li>
-                <li>Developing an AI-based monitoring interface that tracks battery health and performance.</li>
-                <li>Evaluating existing oilfield equipment for drilling, casing, and battery extraction.</li>
-              </ul>
+              <p class="project-summary">A renewable energy storage system that houses batteries in drilled U-shaped boreholes beneath wind and solar farms.</p>
+              <a class="btn btn-small" href="projects/geocell.html">More about this <span aria-hidden="true">→</span></a>
             </div>
           </article>
 
           <article class="project-card">
-            <!-- Add a photo at images/liftlabs-blimp.jpg -->
             <div class="project-media">
               <img src="images/liftlabs-blimp.jpg" alt="LiftLabs autonomous solar-powered blimp" loading="lazy">
               <span class="placeholder-label">Photo coming soon</span>
@@ -194,19 +165,12 @@
                 <span class="badge">Mechanical Team Lead</span>
               </div>
               <h3>Autonomous Solar-Powered Blimp – LiftLabs</h3>
-              <p class="project-sub">Thompson Engineering Fund-Supported · <a href="https://liftlabs.ca/" target="_blank" rel="noopener">liftlabs.ca</a></p>
-              <ul>
-                <li>Leading mechanical system design for an autonomous, solar-powered aerial platform.</li>
-                <li>Designing and modelling structural components and system layout using SolidWorks.</li>
-                <li>Performing component sizing, feasibility analysis, and mass distribution planning to support autonomous flight.</li>
-                <li>Coordinating closely with electrical and controls teams to ensure full system integration.</li>
-                <li>Managing design reviews, prototyping iterations, and implementation planning to meet performance constraints.</li>
-              </ul>
+              <p class="project-summary">Leading mechanical system design for an autonomous, solar-powered aerial platform.</p>
+              <a class="btn btn-small" href="projects/liftlabs.html">More about this <span aria-hidden="true">→</span></a>
             </div>
           </article>
 
           <article class="project-card">
-            <!-- Add a photo at images/rps-hands.jpg -->
             <div class="project-media">
               <img src="images/rps-hands.jpg" alt="Rock-paper-scissors robotic hands" loading="lazy">
               <span class="placeholder-label">Photo coming soon</span>
@@ -217,19 +181,12 @@
                 <span class="badge">Team Project</span>
               </div>
               <h3>Rock-Paper-Scissors Robotic Hands</h3>
-              <p class="project-sub">MSEduino · 3D Printing</p>
-              <ul>
-                <li>3D printed and assembled two robotic hands, each actuated by two motors and controlled with an MSEduino microcontroller.</li>
-                <li>Programmed the motor control that moves each hand into rock, paper, or scissors gestures.</li>
-                <li>Programmed a start-up routine that selects the strongest pair of gestures for the two hands, avoiding weak pairs such as paper and paper.</li>
-                <li>Developed decision logic that takes the opposing team’s two hands as input and chooses which hand to keep and which to withdraw to win.</li>
-                <li>Integrated motor control and game logic into a single working system.</li>
-              </ul>
+              <p class="project-summary">Two 3D-printed robotic hands, each actuated by two motors and controlled with an MSEduino, with logic that chooses which hand to keep to win.</p>
+              <a class="btn btn-small" href="projects/rps-hands.html">More about this <span aria-hidden="true">→</span></a>
             </div>
           </article>
 
           <article class="project-card">
-            <!-- Add a photo at images/robotic-arm.jpg -->
             <div class="project-media">
               <img src="images/robotic-arm.jpg" alt="Servo-driven robotic arm for the Western Engineering Competition" loading="lazy">
               <span class="placeholder-label">Photo coming soon</span>
@@ -240,13 +197,8 @@
                 <span class="badge badge-award">2nd Place</span>
               </div>
               <h3>Robotic Arm – Western Engineering Competition</h3>
-              <p class="project-sub">Senior Design Team Member · London, ON</p>
-              <ul>
-                <li>Designed and implemented a servo-driven robotic arm for precise object manipulation.</li>
-                <li>Led material optimization efforts to balance performance, cost, and manufacturability.</li>
-                <li>Validated design feasibility through testing, iteration, and performance evaluation.</li>
-                <li>Created a SolidWorks model before testing to further validate the design.</li>
-              </ul>
+              <p class="project-summary">A servo-driven robotic arm for precise object manipulation, which placed 2nd in Senior Design.</p>
+              <a class="btn btn-small" href="projects/robotic-arm.html">More about this <span aria-hidden="true">→</span></a>
             </div>
           </article>
 
@@ -254,13 +206,91 @@
       </div>
     </section>
 
-    <!-- LEADERSHIP -->
+    <!-- ===== EXPERIENCE ===== -->
+    <section class="section" id="experience">
+      <div class="container">
+        <h2 class="section-title">Experience</h2>
+        <div class="exp-layout">
+          <aside class="exp-rail" aria-hidden="true">
+            <div class="exp-track">
+              <div class="exp-fill"></div>
+              <div class="exp-node" style="--pos:0">
+                <span class="exp-dot"></span>
+                <span class="exp-node-label"><strong>2026</strong><span>Wandrian</span></span>
+              </div>
+              <div class="exp-node" style="--pos:0.5">
+                <span class="exp-dot"></span>
+                <span class="exp-node-label"><strong>2024</strong><span>CFB Trenton</span></span>
+              </div>
+              <div class="exp-node" style="--pos:1">
+                <span class="exp-dot"></span>
+                <span class="exp-node-label"><strong>2023 &amp; 2025</strong><span>Fast Track</span></span>
+              </div>
+            </div>
+          </aside>
+
+          <div class="exp-list">
+            <article class="exp-card">
+              <div class="exp-head">
+                <div>
+                  <h3>Software Engineer Intern</h3>
+                  <p class="org">Wandrian (ItaliaRail)</p>
+                </div>
+                <span class="date">May 2026 – Aug 2026</span>
+              </div>
+              <ul>
+                <li>Developed features and fixes for ItaliaRail, a rail booking platform offering 80,000+ routes, across a .NET/C# backend and Angular frontend.</li>
+                <li>Built a trip summary card featuring a mobile swipe-up interaction and conditional logic based on train type.</li>
+                <li>Made the class comparison popup configuration-driven so content updates no longer require a deployment; designed it with a C4 diagram and gained developer sign-off before implementation.</li>
+                <li>Fixed fare validation bugs in the journey engine that allowed duplicate trips to be added to the cart.</li>
+                <li>Resolved failing unit tests and Azure DevOps CI pipeline failures; worked through code reviews and sprint meetings in an Agile team.</li>
+              </ul>
+            </article>
+
+            <article class="exp-card">
+              <div class="exp-head">
+                <div>
+                  <h3>Water, Fuel, and Environmental (W.F.E.) Technician</h3>
+                  <p class="org">Canadian Forces Base Trenton · Trenton, ON</p>
+                </div>
+                <span class="date">Jun 2024 – Aug 2024</span>
+              </div>
+              <ul>
+                <li>Operated and maintained industrial water purification and fuel distribution systems.</li>
+                <li>Conducted preventive maintenance, diagnostics, and troubleshooting to ensure system readiness.</li>
+                <li>Documented maintenance procedures and system performance to military technical standards.</li>
+                <li>Ensured strict compliance with safety protocols when handling hazardous materials.</li>
+                <li>Collaborated with multidisciplinary teams in a regulated, high-responsibility environment.</li>
+              </ul>
+            </article>
+
+            <article class="exp-card">
+              <div class="exp-head">
+                <div>
+                  <h3>Framing Specialist</h3>
+                  <p class="org">Fast Track Construction · Trenton, ON</p>
+                </div>
+                <span class="date">Summers 2023 &amp; 2025</span>
+              </div>
+              <ul>
+                <li>Interpreted engineering drawings and blueprints to execute precise framing work.</li>
+                <li>Used hand and power tools to fabricate and assemble structural components.</li>
+                <li>Worked efficiently in a fast-paced team environment to meet project deadlines.</li>
+                <li>Developed strong attention to detail, time management, and on-site problem-solving skills.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LEADERSHIP ===== -->
     <section class="section section-alt" id="leadership">
       <div class="container">
         <h2 class="section-title">Leadership &amp; Involvement</h2>
         <div class="leadership-grid">
           <article class="lead-card">
-            <div class="timeline-head">
+            <div class="exp-head stacked">
               <div>
                 <h3>Assistant Coach, Men’s Engineering Basketball</h3>
                 <p class="org">Western University</p>
@@ -273,7 +303,7 @@
             </ul>
           </article>
           <article class="lead-card">
-            <div class="timeline-head">
+            <div class="exp-head stacked">
               <div>
                 <h3>Executive Member, Western Ski &amp; Snowboard Club</h3>
                 <p class="org">Western University</p>
@@ -291,7 +321,7 @@
       </div>
     </section>
 
-    <!-- SKILLS -->
+    <!-- ===== SKILLS ===== -->
     <section class="section" id="skills">
       <div class="container">
         <h2 class="section-title">Skills</h2>
@@ -318,11 +348,11 @@
       </div>
     </section>
 
-    <!-- CONTACT -->
+    <!-- ===== CONTACT ===== -->
     <section class="section section-dark" id="contact">
       <div class="container contact-inner">
         <h2 class="section-title">Get in Touch</h2>
-        <p class="contact-lead">I’m always happy to connect about engineering, co-op opportunities, or projects.</p>
+        <p class="contact-lead">Open to full-time roles starting May 2027 or later. The best way to reach me is email or LinkedIn.</p>
         <div class="contact-links">
           <a class="contact-card" href="mailto:owenshea04@gmail.com">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1 2.2V17h16V7.2l-8 5.3-8-5.3zM5.4 7 12 11.4 18.6 7H5.4z"/></svg>
@@ -343,7 +373,7 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <p>&copy; <span id="year"></span> Owen O’Donnell</p>
-      <a href="#hero">Back to top ↑</a>
+      <a href="#intro">Back to top ↑</a>
     </div>
   </footer>
 

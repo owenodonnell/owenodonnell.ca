@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Rock-Paper-Scissors Robotic Hands | Owen O’Donnell</title>
+  <meta name="description" content="Two 3D-printed robotic hands, each actuated by two motors and controlled with an MSEduino microcontroller, with game logic to win rock-paper-scissors.">
+  <link rel="canonical" href="https://owenodonnell.ca/projects/rps-hands.html">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231e3a5f'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial,sans-serif' font-weight='700' font-size='28' fill='%23fff'%3EO%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="Primary">
+      <a href="../index.html" class="nav-logo">Owen O’Donnell</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#leadership">Leadership</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+        <li><a href="../resume.pdf" class="nav-cta" target="_blank" rel="noopener">Resume</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" class="project-page">
+    <div class="container">
+      <a class="back-link" href="../index.html#projects"><span class="arrow" aria-hidden="true">←</span> Back to projects</a>
+
+      <header class="project-head">
+        <p class="eyebrow"><span class="badge">Team Project</span><span class="date">Jan 2026 – Apr 2026</span></p>
+        <h1>Rock-Paper-Scissors Robotic Hands</h1>
+        <p class="lede">Two 3D-printed robotic hands, each actuated by two motors and controlled with an MSEduino, with logic that chooses which hand to keep to win.</p>
+      </header>
+
+      <!-- Add a photo at images/rps-hands.jpg -->
+      <div class="project-media project-hero-media">
+        <img src="../images/rps-hands.jpg" alt="Rock-paper-scissors robotic hands">
+        <span class="placeholder-label">Photo coming soon</span>
+      </div>
+
+      <div class="project-detail-grid">
+        <section class="project-detail-main">
+          <h2>What I did</h2>
+          <ul>
+            <li>3D printed and assembled two robotic hands, each actuated by two motors and controlled with an MSEduino microcontroller.</li>
+            <li>Programmed the motor control that moves each hand into rock, paper, or scissors gestures.</li>
+            <li>Programmed a start-up routine that selects the strongest pair of gestures for the two hands, avoiding weak pairs such as paper and paper.</li>
+            <li>Developed decision logic that takes the opposing team’s two hands as input and chooses which hand to keep and which to withdraw to win.</li>
+            <li>Integrated motor control and game logic into a single working system.</li>
+          </ul>
+        </section>
+        <aside class="project-facts">
+          <h2>At a glance</h2>
+          <dl>
+            <div><dt>Dates</dt><dd>Jan 2026 – Apr 2026</dd></div>
+            <div><dt>Type</dt><dd>Team Project</dd></div>
+            <div><dt>Tools</dt><dd>MSEduino, 3D Printing</dd></div>
+          </dl>
+        </aside>
+      </div>
+
+      <nav class="project-pager" aria-label="More projects">
+        <a class="pager-link prev" href="liftlabs.html">
+          <small>← Previous project</small>
+          <span>Autonomous Solar-Powered Blimp – LiftLabs</span>
+        </a>
+        <a class="pager-link next" href="robotic-arm.html">
+          <small>Next project →</small>
+          <span>Robotic Arm – Western Engineering Competition</span>
+        </a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year"></span> Owen O’Donnell</p>
+      <a href="../index.html#projects">All projects</a>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
